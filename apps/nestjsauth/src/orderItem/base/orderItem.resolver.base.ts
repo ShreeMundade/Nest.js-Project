@@ -26,6 +26,7 @@ import { OrderItemFindUniqueArgs } from "./OrderItemFindUniqueArgs";
 import { CreateOrderItemArgs } from "./CreateOrderItemArgs";
 import { UpdateOrderItemArgs } from "./UpdateOrderItemArgs";
 import { DeleteOrderItemArgs } from "./DeleteOrderItemArgs";
+import { OrderFindManyArgs } from "../../order/base/OrderFindManyArgs";
 import { Order } from "../../order/base/Order";
 import { OrderItemService } from "../orderItem.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
@@ -93,15 +94,7 @@ export class OrderItemResolverBase {
   ): Promise<OrderItem> {
     return await this.service.createOrderItem({
       ...args,
-      data: {
-        ...args.data,
-
-        orders: args.data.orders
-          ? {
-              connect: args.data.orders,
-            }
-          : undefined,
-      },
+      data: args.data,
     });
   }
 
@@ -118,15 +111,7 @@ export class OrderItemResolverBase {
     try {
       return await this.service.updateOrderItem({
         ...args,
-        data: {
-          ...args.data,
-
-          orders: args.data.orders
-            ? {
-                connect: args.data.orders,
-              }
-            : undefined,
-        },
+        data: args.data,
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -160,21 +145,22 @@ export class OrderItemResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => Order, {
-    nullable: true,
-    name: "orders",
-  })
+  @graphql.ResolveField(() => [Order], { name: "orders" })
   @nestAccessControl.UseRoles({
     resource: "Order",
     action: "read",
     possession: "any",
   })
-  async getOrders(@graphql.Parent() parent: OrderItem): Promise<Order | null> {
-    const result = await this.service.getOrders(parent.id);
+  async findOrders(
+    @graphql.Parent() parent: OrderItem,
+    @graphql.Args() args: OrderFindManyArgs
+  ): Promise<Order[]> {
+    const results = await this.service.findOrders(parent.id, args);
 
-    if (!result) {
-      return null;
+    if (!results) {
+      return [];
     }
-    return result;
+
+    return results;
   }
 }

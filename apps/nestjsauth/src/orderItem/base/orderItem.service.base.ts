@@ -51,11 +51,14 @@ export class OrderItemServiceBase {
     return this.prisma.orderItem.delete(args);
   }
 
-  async getOrders(parentId: string): Promise<PrismaOrder | null> {
+  async findOrders(
+    parentId: string,
+    args: Prisma.OrderFindManyArgs
+  ): Promise<PrismaOrder[]> {
     return this.prisma.orderItem
-      .findUnique({
+      .findUniqueOrThrow({
         where: { id: parentId },
       })
-      .orders();
+      .orders(args);
   }
 }
