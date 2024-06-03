@@ -48,6 +48,9 @@ export class OrderItemControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
+  @swagger.ApiBody({
+    type: OrderItemCreateInput,
+  })
   async createOrderItem(
     @common.Body() data: OrderItemCreateInput
   ): Promise<OrderItem> {
@@ -130,6 +133,9 @@ export class OrderItemControllerBase {
   })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
+  })
+  @swagger.ApiBody({
+    type: OrderItemUpdateInput,
   })
   async updateOrderItem(
     @common.Param() params: OrderItemWhereUniqueInput,
