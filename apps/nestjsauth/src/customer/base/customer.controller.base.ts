@@ -292,6 +292,12 @@ export class CustomerControllerBase {
         discount: true,
         id: true,
 
+        orderItem: {
+          select: {
+            id: true,
+          },
+        },
+
         product: {
           select: {
             id: true,

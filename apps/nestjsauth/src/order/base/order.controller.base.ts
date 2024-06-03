@@ -56,6 +56,12 @@ export class OrderControllerBase {
             }
           : undefined,
 
+        orderItem: data.orderItem
+          ? {
+              connect: data.orderItem,
+            }
+          : undefined,
+
         product: data.product
           ? {
               connect: data.product,
@@ -73,6 +79,12 @@ export class OrderControllerBase {
 
         discount: true,
         id: true,
+
+        orderItem: {
+          select: {
+            id: true,
+          },
+        },
 
         product: {
           select: {
@@ -115,6 +127,12 @@ export class OrderControllerBase {
         discount: true,
         id: true,
 
+        orderItem: {
+          select: {
+            id: true,
+          },
+        },
+
         product: {
           select: {
             id: true,
@@ -156,6 +174,12 @@ export class OrderControllerBase {
 
         discount: true,
         id: true,
+
+        orderItem: {
+          select: {
+            id: true,
+          },
+        },
 
         product: {
           select: {
@@ -204,6 +228,12 @@ export class OrderControllerBase {
               }
             : undefined,
 
+          orderItem: data.orderItem
+            ? {
+                connect: data.orderItem,
+              }
+            : undefined,
+
           product: data.product
             ? {
                 connect: data.product,
@@ -221,6 +251,12 @@ export class OrderControllerBase {
 
           discount: true,
           id: true,
+
+          orderItem: {
+            select: {
+              id: true,
+            },
+          },
 
           product: {
             select: {
@@ -271,6 +307,12 @@ export class OrderControllerBase {
 
           discount: true,
           id: true,
+
+          orderItem: {
+            select: {
+              id: true,
+            },
+          },
 
           product: {
             select: {
