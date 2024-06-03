@@ -27,6 +27,7 @@ import { CreateOrderArgs } from "./CreateOrderArgs";
 import { UpdateOrderArgs } from "./UpdateOrderArgs";
 import { DeleteOrderArgs } from "./DeleteOrderArgs";
 import { Customer } from "../../customer/base/Customer";
+import { OrderItem } from "../../orderItem/base/OrderItem";
 import { Product } from "../../product/base/Product";
 import { OrderService } from "../order.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
@@ -99,6 +100,12 @@ export class OrderResolverBase {
             }
           : undefined,
 
+        orderItem: args.data.orderItem
+          ? {
+              connect: args.data.orderItem,
+            }
+          : undefined,
+
         product: args.data.product
           ? {
               connect: args.data.product,
@@ -127,6 +134,12 @@ export class OrderResolverBase {
           customer: args.data.customer
             ? {
                 connect: args.data.customer,
+              }
+            : undefined,
+
+          orderItem: args.data.orderItem
+            ? {
+                connect: args.data.orderItem,
               }
             : undefined,
 
@@ -180,6 +193,27 @@ export class OrderResolverBase {
   })
   async getCustomer(@graphql.Parent() parent: Order): Promise<Customer | null> {
     const result = await this.service.getCustomer(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => OrderItem, {
+    nullable: true,
+    name: "orderItem",
+  })
+  @nestAccessControl.UseRoles({
+    resource: "OrderItem",
+    action: "read",
+    possession: "any",
+  })
+  async getOrderItem(
+    @graphql.Parent() parent: Order
+  ): Promise<OrderItem | null> {
+    const result = await this.service.getOrderItem(parent.id);
 
     if (!result) {
       return null;
