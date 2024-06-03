@@ -47,6 +47,7 @@ $ npm run db:init
 
 # start the server component
 $ npm run start
+
 ```
 By default, your app comes with one user with the username "admin" and password "admin".
 
