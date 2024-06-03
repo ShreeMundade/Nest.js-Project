@@ -15,7 +15,7 @@ import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
-import { OrderWhereUniqueInput } from "../../order/base/OrderWhereUniqueInput";
+import { OrderListRelationFilter } from "../../order/base/OrderListRelationFilter";
 
 @InputType()
 class OrderItemWhereInput {
@@ -43,15 +43,15 @@ class OrderItemWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => OrderWhereUniqueInput,
+    type: () => OrderListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => OrderWhereUniqueInput)
+  @Type(() => OrderListRelationFilter)
   @IsOptional()
-  @Field(() => OrderWhereUniqueInput, {
+  @Field(() => OrderListRelationFilter, {
     nullable: true,
   })
-  orders?: OrderWhereUniqueInput;
+  orders?: OrderListRelationFilter;
 }
 
 export { OrderItemWhereInput as OrderItemWhereInput };

@@ -1,6 +1,6 @@
-import { OrderWhereUniqueInput } from "../order/OrderWhereUniqueInput";
+import { OrderUpdateManyWithoutOrderItemsInput } from "./OrderUpdateManyWithoutOrderItemsInput";
 
 export type OrderItemUpdateInput = {
   name?: string | null;
-  orders?: OrderWhereUniqueInput | null;
+  orders?: OrderUpdateManyWithoutOrderItemsInput;
 };

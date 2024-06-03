@@ -4,6 +4,6 @@ export type OrderItem = {
   createdAt: Date;
   id: string;
   name: string | null;
-  orders?: Order | null;
+  orders?: Array<Order>;
   updatedAt: Date;
 };
