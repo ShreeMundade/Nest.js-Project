@@ -64,7 +64,7 @@ import { AuthModule } from "./auth/auth.module";
       imports: [ConfigModule],
     }),
     OpenTelemetryModule.forRoot({
-      serviceName: "nestjsauth",
+      serviceName: "nestjsauth-service",
       spanProcessor: new BatchSpanProcessor(new OTLPTraceExporter()),
       instrumentations: [
         new HttpInstrumentation({
