@@ -173,17 +173,20 @@ type Mutation {
   createAddress(data: AddressCreateInput!): Address!
   createCustomer(data: CustomerCreateInput!): Customer!
   createOrder(data: OrderCreateInput!): Order!
+  createOrderItem(data: OrderItemCreateInput!): OrderItem!
   createProduct(data: ProductCreateInput!): Product!
   createUser(data: UserCreateInput!): User!
   deleteAddress(where: AddressWhereUniqueInput!): Address!
   deleteCustomer(where: CustomerWhereUniqueInput!): Customer!
   deleteOrder(where: OrderWhereUniqueInput!): Order!
+  deleteOrderItem(where: OrderItemWhereUniqueInput!): OrderItem!
   deleteProduct(where: ProductWhereUniqueInput!): Product!
   deleteUser(where: UserWhereUniqueInput!): User!
   login(credentials: Credentials!): UserInfo!
   updateAddress(data: AddressUpdateInput!, where: AddressWhereUniqueInput!): Address!
   updateCustomer(data: CustomerUpdateInput!, where: CustomerWhereUniqueInput!): Customer!
   updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order!
+  updateOrderItem(data: OrderItemUpdateInput!, where: OrderItemWhereUniqueInput!): OrderItem!
   updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
 }
@@ -193,6 +196,7 @@ type Order {
   customer: Customer
   discount: Float
   id: String!
+  orderItem: OrderItem
   product: Product
   quantity: Float
   totalPrice: Float
@@ -202,6 +206,7 @@ type Order {
 input OrderCreateInput {
   customer: CustomerWhereUniqueInput
   discount: Float
+  orderItem: OrderItemWhereUniqueInput
   product: ProductWhereUniqueInput
   quantity: Float
   totalPrice: Float
@@ -211,8 +216,47 @@ input OrderCreateNestedManyWithoutCustomersInput {
   connect: [OrderWhereUniqueInput!]
 }
 
+input OrderCreateNestedManyWithoutOrderItemsInput {
+  connect: [OrderWhereUniqueInput!]
+}
+
 input OrderCreateNestedManyWithoutProductsInput {
   connect: [OrderWhereUniqueInput!]
+}
+
+type OrderItem {
+  createdAt: DateTime!
+  id: String!
+  name: String
+  orders(orderBy: [OrderOrderByInput!], skip: Float, take: Float, where: OrderWhereInput): [Order!]!
+  updatedAt: DateTime!
+}
+
+input OrderItemCreateInput {
+  name: String
+  orders: OrderCreateNestedManyWithoutOrderItemsInput
+}
+
+input OrderItemOrderByInput {
+  createdAt: SortOrder
+  id: SortOrder
+  name: SortOrder
+  updatedAt: SortOrder
+}
+
+input OrderItemUpdateInput {
+  name: String
+  orders: OrderUpdateManyWithoutOrderItemsInput
+}
+
+input OrderItemWhereInput {
+  id: StringFilter
+  name: StringNullableFilter
+  orders: OrderListRelationFilter
+}
+
+input OrderItemWhereUniqueInput {
+  id: String!
 }
 
 input OrderListRelationFilter {
@@ -226,6 +270,7 @@ input OrderOrderByInput {
   customerId: SortOrder
   discount: SortOrder
   id: SortOrder
+  orderItemId: SortOrder
   productId: SortOrder
   quantity: SortOrder
   totalPrice: SortOrder
@@ -235,12 +280,19 @@ input OrderOrderByInput {
 input OrderUpdateInput {
   customer: CustomerWhereUniqueInput
   discount: Float
+  orderItem: OrderItemWhereUniqueInput
   product: ProductWhereUniqueInput
   quantity: Float
   totalPrice: Float
 }
 
 input OrderUpdateManyWithoutCustomersInput {
+  connect: [OrderWhereUniqueInput!]
+  disconnect: [OrderWhereUniqueInput!]
+  set: [OrderWhereUniqueInput!]
+}
+
+input OrderUpdateManyWithoutOrderItemsInput {
   connect: [OrderWhereUniqueInput!]
   disconnect: [OrderWhereUniqueInput!]
   set: [OrderWhereUniqueInput!]
@@ -256,6 +308,7 @@ input OrderWhereInput {
   customer: CustomerWhereUniqueInput
   discount: FloatNullableFilter
   id: StringFilter
+  orderItem: OrderItemWhereUniqueInput
   product: ProductWhereUniqueInput
   quantity: IntNullableFilter
   totalPrice: IntNullableFilter
@@ -313,6 +366,7 @@ input ProductWhereUniqueInput {
 type Query {
   _addressesMeta(where: AddressWhereInput): MetaQueryPayload!
   _customersMeta(where: CustomerWhereInput): MetaQueryPayload!
+  _orderItemsMeta(where: OrderItemWhereInput): MetaQueryPayload!
   _ordersMeta(where: OrderWhereInput): MetaQueryPayload!
   _productsMeta(where: ProductWhereInput): MetaQueryPayload!
   _usersMeta(where: UserWhereInput): MetaQueryPayload!
@@ -321,6 +375,8 @@ type Query {
   customer(where: CustomerWhereUniqueInput!): Customer
   customers(orderBy: [CustomerOrderByInput!], skip: Float, take: Float, where: CustomerWhereInput): [Customer!]!
   order(where: OrderWhereUniqueInput!): Order
+  orderItem(where: OrderItemWhereUniqueInput!): OrderItem
+  orderItems(orderBy: [OrderItemOrderByInput!], skip: Float, take: Float, where: OrderItemWhereInput): [OrderItem!]!
   orders(orderBy: [OrderOrderByInput!], skip: Float, take: Float, where: OrderWhereInput): [Order!]!
   product(where: ProductWhereUniqueInput!): Product
   products(orderBy: [ProductOrderByInput!], skip: Float, take: Float, where: ProductWhereInput): [Product!]!
