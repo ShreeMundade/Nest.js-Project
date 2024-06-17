@@ -99,33 +99,19 @@ export class CustomerControllerBase {
     return this.service.customers({
       ...args,
       select: {
-        id: true,
-        firstName: true,
-        lastName: true,
-        email: true,
-        phone: true,
         address: {
           select: {
-            id: false,
-            address_1 :true,
-            state:true
-          },
-        },
-        orders: {
-          select: {
             id: true,
-            totalPrice : true,
-            product: {
-              select: {
-                name: true,
-                itemPrice: true,
-                description:true
-              },
-            }
           },
         },
-        createdAt: false,
-        updatedAt: false,
+
+        createdAt: true,
+        email: true,
+        firstName: true,
+        id: true,
+        lastName: true,
+        phone: true,
+        updatedAt: true,
       },
     });
   }
@@ -137,7 +123,7 @@ export class CustomerControllerBase {
   @nestAccessControl.UseRoles({
     resource: "Customer",
     action: "read",
-    possession: "own", 
+    possession: "own",
   })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
