@@ -86,10 +86,6 @@ export class OrderControllerBase {
         orderItem: {
           select: {
             id: true,
-            name: true,
-            createdAt: true,
-            updatedAt: true,
-
           },
         },
 
@@ -137,9 +133,6 @@ export class OrderControllerBase {
         orderItem: {
           select: {
             id: true,
-            name: true,
-            createdAt: true,
-            updatedAt: true,
           },
         },
 
