@@ -26,29 +26,19 @@ export class OrderServiceBase {
     return this.prisma.order.count(args);
   }
 
-  async orders<T extends Prisma.OrderFindManyArgs>(
-    args: Prisma.SelectSubset<T, Prisma.OrderFindManyArgs>
-  ): Promise<PrismaOrder[]> {
-    return this.prisma.order.findMany<Prisma.OrderFindManyArgs>(args);
+  async orders(args: Prisma.OrderFindManyArgs): Promise<PrismaOrder[]> {
+    return this.prisma.order.findMany(args);
   }
-  async order<T extends Prisma.OrderFindUniqueArgs>(
-    args: Prisma.SelectSubset<T, Prisma.OrderFindUniqueArgs>
-  ): Promise<PrismaOrder | null> {
+  async order(args: Prisma.OrderFindUniqueArgs): Promise<PrismaOrder | null> {
     return this.prisma.order.findUnique(args);
   }
-  async createOrder<T extends Prisma.OrderCreateArgs>(
-    args: Prisma.SelectSubset<T, Prisma.OrderCreateArgs>
-  ): Promise<PrismaOrder> {
-    return this.prisma.order.create<T>(args);
+  async createOrder(args: Prisma.OrderCreateArgs): Promise<PrismaOrder> {
+    return this.prisma.order.create(args);
   }
-  async updateOrder<T extends Prisma.OrderUpdateArgs>(
-    args: Prisma.SelectSubset<T, Prisma.OrderUpdateArgs>
-  ): Promise<PrismaOrder> {
-    return this.prisma.order.update<T>(args);
+  async updateOrder(args: Prisma.OrderUpdateArgs): Promise<PrismaOrder> {
+    return this.prisma.order.update(args);
   }
-  async deleteOrder<T extends Prisma.OrderDeleteArgs>(
-    args: Prisma.SelectSubset<T, Prisma.OrderDeleteArgs>
-  ): Promise<PrismaOrder> {
+  async deleteOrder(args: Prisma.OrderDeleteArgs): Promise<PrismaOrder> {
     return this.prisma.order.delete(args);
   }
 

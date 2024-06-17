@@ -23,29 +23,21 @@ export class AddressServiceBase {
     return this.prisma.address.count(args);
   }
 
-  async addresses<T extends Prisma.AddressFindManyArgs>(
-    args: Prisma.SelectSubset<T, Prisma.AddressFindManyArgs>
-  ): Promise<PrismaAddress[]> {
-    return this.prisma.address.findMany<Prisma.AddressFindManyArgs>(args);
+  async addresses(args: Prisma.AddressFindManyArgs): Promise<PrismaAddress[]> {
+    return this.prisma.address.findMany(args);
   }
-  async address<T extends Prisma.AddressFindUniqueArgs>(
-    args: Prisma.SelectSubset<T, Prisma.AddressFindUniqueArgs>
+  async address(
+    args: Prisma.AddressFindUniqueArgs
   ): Promise<PrismaAddress | null> {
     return this.prisma.address.findUnique(args);
   }
-  async createAddress<T extends Prisma.AddressCreateArgs>(
-    args: Prisma.SelectSubset<T, Prisma.AddressCreateArgs>
-  ): Promise<PrismaAddress> {
-    return this.prisma.address.create<T>(args);
+  async createAddress(args: Prisma.AddressCreateArgs): Promise<PrismaAddress> {
+    return this.prisma.address.create(args);
   }
-  async updateAddress<T extends Prisma.AddressUpdateArgs>(
-    args: Prisma.SelectSubset<T, Prisma.AddressUpdateArgs>
-  ): Promise<PrismaAddress> {
-    return this.prisma.address.update<T>(args);
+  async updateAddress(args: Prisma.AddressUpdateArgs): Promise<PrismaAddress> {
+    return this.prisma.address.update(args);
   }
-  async deleteAddress<T extends Prisma.AddressDeleteArgs>(
-    args: Prisma.SelectSubset<T, Prisma.AddressDeleteArgs>
-  ): Promise<PrismaAddress> {
+  async deleteAddress(args: Prisma.AddressDeleteArgs): Promise<PrismaAddress> {
     return this.prisma.address.delete(args);
   }
 
